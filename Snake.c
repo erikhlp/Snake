@@ -3,7 +3,26 @@
 #define N 20
 #define M 40
 
-int i, j;
+int i, j, Field[N][M], x, y, Gy, Head, Tail;
+
+void snakeInitialization() {
+    for(i=0; i<N; i++) {
+        for(j=0; j<M; j++) {
+            Field[i][j] = 0;
+        }
+    }
+
+    x = N/2; 
+    y = M/2;
+    Head = 5;
+    Tail = 1;
+    Gy = y;
+
+    for(i=0; i<Head; i++) {
+        Gy++;
+        Field[x][Gy-Head] = i+1;
+    }
+}
 
 void buildFieldPlay() {
     for(i=0; i<=M+1; i++) {
@@ -21,11 +40,10 @@ void buildFieldPlay() {
     for(i=0; i<N; i++){
         printf("%c", 186);
         for(j=0; j<M; j++) {
-            if(j==M-1) {
-                printf(" %c\n", 186);
-            } else {
-                printf(" ");
-            }
+            if(Field[i][j]==0) printf(" ");
+            if(Field[i][j]>0 && Field[i][j] != Head) printf("%c", 176); 
+            if(Field[i][j] == Head) printf("%c", 178);
+            if(j==M-1) printf("%c\n", 186);
         }
     }
 
@@ -44,5 +62,6 @@ void buildFieldPlay() {
 
 
 void main(){
+    snakeInitialization();
     buildFieldPlay();
 }
