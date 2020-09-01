@@ -7,7 +7,7 @@
 #define N 20
 #define M 40
 
-int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b;
+int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var;
 
 void snakeInitialization() {
     for(i=0; i<N; i++) {
@@ -86,6 +86,43 @@ Random(){
 	}
 }
 
+int getch_noblock() {
+	if(_kbhit()) {
+		return _getch();
+	} else {
+		return -1;
+	}
+}
+
+void movement() {
+	var = getch_noblock();
+	var = tolower(var);
+	
+	if(var == 'd') {
+		y++;
+		Head++;
+		Field[x][y] = Head;
+	} 
+	
+	if(var == 'a') {
+		y--;
+		Head++;
+		Field[x][y] = Head;
+	} 
+	
+	if(var == 'w') {
+		x--;
+		Head++;
+		Field[x][y] = Head;
+	} 
+	
+	if(var == 's') {
+		x++;
+		Head++;
+		Field[x][y] = Head;
+	} 
+}
+
 void main(){
     snakeInitialization();
 
@@ -93,6 +130,8 @@ void main(){
         buildFieldPlay();
         ResetScreenPosition();
         Random();
+        movement();
+        Sleep(99);
     }
 
 }
