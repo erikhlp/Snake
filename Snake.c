@@ -7,7 +7,7 @@
 #define N 20
 #define M 40
 
-int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var;
+int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var, dir;
 
 void snakeInitialization() {
     for(i=0; i<N; i++) {
@@ -23,6 +23,7 @@ void snakeInitialization() {
     Tail = 1;
     Game = 0;
     Frogs = 0;
+    dir = 'd';
 
     for(i=0; i<Head; i++) {
         Gy++;
@@ -98,29 +99,44 @@ void movement() {
 	var = getch_noblock();
 	var = tolower(var);
 	
-	if(var == 'd') {
+	if(((var == 'd' || var == 'a') || (var == 'w' || var == 's')) && (abs (dir-var)>5)) {
+		dir = var;
+	}
+	
+	if(dir == 'd') {
 		y++;
 		Head++;
 		Field[x][y] = Head;
 	} 
 	
-	if(var == 'a') {
+	if(dir == 'a') {
 		y--;
 		Head++;
 		Field[x][y] = Head;
 	} 
 	
-	if(var == 'w') {
+	if(dir == 'w') {
 		x--;
 		Head++;
 		Field[x][y] = Head;
 	} 
 	
-	if(var == 's') {
+	if(dir == 's') {
 		x++;
 		Head++;
 		Field[x][y] = Head;
 	} 
+}
+
+void TailRemover() {
+	for(i=0; i<N; i++) {
+		for(j=0; j<M; j++) {
+			if(Field[i][j] == Tail) {
+				Field[i][j] = 0;
+			}
+		}
+	}
+	Tail++;
 }
 
 void main(){
@@ -131,6 +147,7 @@ void main(){
         ResetScreenPosition();
         Random();
         movement();
+        TailRemover();
         Sleep(99);
     }
 
