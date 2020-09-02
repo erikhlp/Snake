@@ -105,24 +105,36 @@ void movement() {
 	
 	if(dir == 'd') {
 		y++;
+		if(y == M-1) { 
+		y=0;
+		} 
 		Head++;
 		Field[x][y] = Head;
 	} 
 	
 	if(dir == 'a') {
 		y--;
+		if(y == 0) { 
+		y = M-1;
+		} 
 		Head++;
 		Field[x][y] = Head;
 	} 
 	
 	if(dir == 'w') {
 		x--;
+		if(x == -1) { 
+		x = N-1;
+		} 
 		Head++;
 		Field[x][y] = Head;
 	} 
 	
 	if(dir == 's') {
 		x++;
+		if(x == N) { 
+		x = 0;
+		} 
 		Head++;
 		Field[x][y] = Head;
 	} 
